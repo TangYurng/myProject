@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="javascripts/jquery-1.8.3.min.js"></script>
+    <script>
+        function sendReq() {
+            $.ajax({
+                url:'http://localhost:3000/test',
+                headers: {
+                    "Authorization": 'myuserToken'//此处放置请求到的用户token
+                },
+                type: "get",
+                // url: "XXXXX",//请求url
+                contentType: "application/x-www-form-urlencoded",
+                success: (data) => {
+       
+                        alert("请求错误！错误信息：" + data);
+                   
+                },
+                error: (err) => {
+                    this.loginLoading = false;
+                    alert("错误信息：" + JSON.stringify(err))
+                }
+            })
+        }
+    </script>
+</head>
+
+<body>
+    <button onclick="sendReq()">请求</button>
+</body>
+
+</html>

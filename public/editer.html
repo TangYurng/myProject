@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>格式化图文混合上传</title>
+    <script src="javascripts/jquery-1.8.3.min.js"></script>
+    <script src="https://unpkg.com/wangeditor/release/wangEditor.min.js"></script>
+    <script>
+        var editor2 = null
+        window.onload = function () {
+            var E = window.wangEditor
+            editor2 = new E('#div3')
+            //// 使用 base64 保存图片
+            //原理：
+            //1.把图片转化为base64格式的字符串
+            //2.上传服务器
+            // editor2.customConfig.uploadImgShowBase64 = true   
+            //使用web服务器接收图片
+            //原理：
+            //1.把图片上传到服务器指定的目录中
+            //2.把图片在服务器上的路径返回
+            //3.在wangeditor编辑器中插入图片（把返回的图片路径设置到img标签的src中，自动执行）
+            //4.上传到服务器
+            editor2.customConfig.uploadImgServer = '/upload'     //upload是服务器接口
+            editor2.create()
+        }
+        function upload(){
+            alert(editor2.txt.html())
+            $.post('/commit',{data:editor2.txt.html()},function(){
+                alert('上传成功！')
+            })
+        }
+    </script>
+</head>
+
+<body>
+    <button onclick="upload()">提交服务器</button>
+    <div id="div3"></div>
+</body>
+
+</html>
